@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:friend_app/applanguage_screen.dart';
+import 'package:friend_app/callhisttory_screen.dart';
+import 'package:friend_app/editprofile_screen.dart';
+import 'package:friend_app/helpandsupport_screen.dart';
+import 'package:friend_app/mygallery_screen.dart';
+import 'package:friend_app/setting_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -57,19 +63,29 @@ class ProfileScreen extends StatelessWidget {
                           size: 18,
                         ),
 
-                        Container(
-                          height: 42,
-                          width: 42,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const EditProfileScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 42,
+                            width: 42,
 
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(.20),
-                            shape: BoxShape.circle,
-                          ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(.20),
+                              shape: BoxShape.circle,
+                            ),
 
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                            size: 18,
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 18,
+                            ),
                           ),
                         ),
                       ],
@@ -315,24 +331,91 @@ class ProfileScreen extends StatelessWidget {
                     icon: Icons.star,
                     title: "Host Create",
                     iconBg: const Color(0xff2D1BB3),
+                    onTap: () {
+                      print("Help & Support clicked");
+                    },
                   ),
 
-                  buildMenuItem(icon: Icons.history, title: "Call History"),
+                  buildMenuItem(
+                    icon: Icons.history,
+                    title: "Call History",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CallhisttoryScreen(),
+                        ),
+                      );
+                    },
+                  ),
 
-                  buildMenuItem(icon: Icons.language, title: "Language"),
+                  buildMenuItem(
+                    icon: Icons.language,
+                    title: "Language",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ApplanguageScreen(),
+                        ),
+                      );
+                    },
+                  ),
 
-                  buildMenuItem(icon: Icons.people, title: "Followers"),
+                  buildMenuItem(
+                    icon: Icons.people,
+                    title: "Followers",
+                    onTap: () {
+                      print("Help & Support clicked");
+                    },
+                  ),
 
-                  buildMenuItem(icon: Icons.photo_library, title: "My Gallery"),
+                  buildMenuItem(
+                    icon: Icons.photo_library,
+                    title: "My Gallery",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MygalleryScreen(),
+                        ),
+                      );
+                    },
+                  ),
 
-                  buildMenuItem(icon: Icons.block, title: "Blocked Users"),
+                  buildMenuItem(
+                    icon: Icons.block,
+                    title: "Blocked Users",
+                    onTap: () {
+                      print("Help & Support clicked");
+                    },
+                  ),
 
                   buildMenuItem(
                     icon: Icons.support_agent,
                     title: "Help & Support",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HelpandsupportScreen(),
+                        ),
+                      );
+                    },
                   ),
 
-                  buildMenuItem(icon: Icons.settings, title: "Settings"),
+                  buildMenuItem(
+                    icon: Icons.settings,
+                    title: "Settings",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SettingScreen(),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -452,51 +535,59 @@ class ProfileScreen extends StatelessWidget {
   Widget buildMenuItem({
     required IconData icon,
     required String title,
+    required VoidCallback onTap,
     Color iconBg = const Color(0xffEFEFEF),
   }) {
-    return Container(
-      height: 74,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 74,
+        padding: const EdgeInsets.symmetric(horizontal: 14),
 
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
-      ),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+        ),
 
-      child: Row(
-        children: [
-          Container(
-            height: 32,
-            width: 32,
+        child: Row(
+          children: [
+            Container(
+              height: 32,
+              width: 32,
 
-            decoration: BoxDecoration(
-              color: iconBg,
-              borderRadius: BorderRadius.circular(10),
+              decoration: BoxDecoration(
+                color: iconBg,
+                borderRadius: BorderRadius.circular(10),
+              ),
+
+              child: Icon(
+                icon,
+                color: iconBg == const Color(0xff2D1BB3)
+                    ? Colors.white
+                    : Colors.grey.shade700,
+                size: 18,
+              ),
             ),
 
-            child: Icon(
-              icon,
-              color: iconBg == const Color(0xff2D1BB3)
-                  ? Colors.white
-                  : Colors.grey.shade700,
-              size: 18,
+            const SizedBox(width: 14),
+
+            Text(
+              title,
+              style: GoogleFonts.inter(
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
 
-          const SizedBox(width: 14),
+            const Spacer(),
 
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              color: Colors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+            Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.grey.shade400,
+              size: 14,
             ),
-          ),
-
-          const Spacer(),
-
-          Icon(Icons.arrow_forward_ios, color: Colors.grey.shade400, size: 14),
-        ],
+          ],
+        ),
       ),
     );
   }

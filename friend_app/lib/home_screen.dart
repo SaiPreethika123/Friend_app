@@ -4,6 +4,7 @@ import 'package:friend_app/audio_screen.dart';
 import 'package:friend_app/availablecoins_screen.dart';
 import 'package:friend_app/connect_screen.dart';
 import 'package:friend_app/profile_screen.dart';
+import 'package:friend_app/profile_view_screen.dart';
 import 'package:friend_app/search_screen.dart';
 import 'package:friend_app/video_call_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -187,80 +188,75 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
 
         child: Row(
-  children: List.generate(bottomIcons.length, (index) {
-    bool isSelected = bottomIndex == index;
+          children: List.generate(bottomIcons.length, (index) {
+            bool isSelected = bottomIndex == index;
 
-    return Expanded(
-      child: Material(
-        color: Colors.transparent,
+            return Expanded(
+              child: Material(
+                color: Colors.transparent,
 
-        child: InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          focusColor: Colors.transparent,
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
 
-          // borderRadius: BorderRadius.circular(18),
+                  // borderRadius: BorderRadius.circular(18),
+                  onTap: () {
+                    setState(() {
+                      bottomIndex = index;
+                    });
+                  },
 
-          onTap: () {
-            setState(() {
-              bottomIndex = index;
-            });
-          },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeInOut,
 
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeInOut,
+                    decoration: BoxDecoration(
+                      gradient: isSelected
+                          ? const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              stops: [0.0, 0.5, 1.0],
+                              colors: [
+                                Color(0xFF07038D),
+                                Color(0xFF131055),
+                                Color(0xFF120F70),
+                              ],
+                            )
+                          : null,
 
-            decoration: BoxDecoration(
-              gradient: isSelected
-                  ? const LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: [0.0, 0.5, 1.0],
-                      colors: [
-                        Color(0xFF07038D),
-                        Color(0xFF131055),
-                        Color(0xFF120F70),
+                      // borderRadius: BorderRadius.circular(18),
+                    ),
+
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          bottomIcons[index],
+                          color: isSelected ? Colors.white : Colors.black,
+                          size: 24,
+                        ),
+
+                        const SizedBox(height: 4),
+
+                        Text(
+                          bottomLabels[index],
+
+                          style: GoogleFonts.inter(
+                            color: isSelected ? Colors.white : Colors.black87,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
-                    )
-                  : null,
-
-              // borderRadius: BorderRadius.circular(18),
-            ),
-
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  bottomIcons[index],
-                  color: isSelected
-                      ? Colors.white
-                      : Colors.black,
-                  size: 24,
-                ),
-
-                const SizedBox(height: 4),
-
-                Text(
-                  bottomLabels[index],
-
-                  style: GoogleFonts.inter(
-                    color: isSelected
-                        ? Colors.white
-                        : Colors.black87,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          }),
         ),
-      ),
-    );
-  }),
-),
       ),
 
       body: getBody(),
@@ -402,14 +398,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 Row(
                   children: [
-                    Container(
-                      height: 32,
-                      width: 32,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            "https://i.imgur.com/BoN9kdC.png",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileViewScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 32,
+                        width: 32,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              "https://i.imgur.com/BoN9kdC.png",
+                            ),
                           ),
                         ),
                       ),
