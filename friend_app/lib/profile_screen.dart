@@ -3,6 +3,7 @@ import 'package:friend_app/applanguage_screen.dart';
 import 'package:friend_app/callhisttory_screen.dart';
 import 'package:friend_app/editprofile_screen.dart';
 import 'package:friend_app/helpandsupport_screen.dart';
+import 'package:friend_app/host_screen.dart';
 import 'package:friend_app/mygallery_screen.dart';
 import 'package:friend_app/setting_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -332,7 +333,12 @@ class ProfileScreen extends StatelessWidget {
                     title: "Host Create",
                     iconBg: const Color(0xff2D1BB3),
                     onTap: () {
-                      print("Help & Support clicked");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HostScreen(),
+                        ),
+                      );
                     },
                   ),
 

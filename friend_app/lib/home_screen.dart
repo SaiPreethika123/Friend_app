@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:friend_app/audio_screen.dart';
 import 'package:friend_app/availablecoins_screen.dart';
+import 'package:friend_app/chat_screen.dart';
 import 'package:friend_app/connect_screen.dart';
 import 'package:friend_app/profile_screen.dart';
 import 'package:friend_app/profile_view_screen.dart';
@@ -214,7 +215,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     decoration: BoxDecoration(
                       gradient: isSelected
-                          ? const LinearGradient(
+                          ? const 
+                          
+                  LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               stops: [0.0, 0.5, 1.0],
@@ -272,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return const ConnectScreen();
 
       case 2:
-        return const Center(child: Text("Chats Screen"));
+        return const ChatScreen();
 
       case 3:
         return const ProfileScreen();
