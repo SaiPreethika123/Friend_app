@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             : 'Connect Instantly. Talk Freely.',
                         style: GoogleFonts.inter(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 19,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

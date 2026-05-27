@@ -16,10 +16,10 @@ class _CallhisttoryScreenState extends State<CallhisttoryScreen> {
 
       body: Column(
         children: [
-
           // 🔥 CUSTOM TOP BAR (NOT APPBAR)
           Container(
-            padding: EdgeInsets.only(top: 50, left: 16, right: 16, bottom: 16),
+            height: 118,
+            padding: EdgeInsets.only(top: 70, left: 16, right: 16, bottom: 16),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -33,7 +33,16 @@ class _CallhisttoryScreenState extends State<CallhisttoryScreen> {
             ),
             child: Row(
               children: [
-                Icon(Icons.arrow_back, color: Colors.white),
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
                 SizedBox(width: 12),
 
                 Expanded(
@@ -41,19 +50,21 @@ class _CallhisttoryScreenState extends State<CallhisttoryScreen> {
                     "Call History",
                     style: GoogleFonts.inter(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
 
                 Container(
+                  height: 48,
+                  width: 48,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    shape: BoxShape.circle,
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: EdgeInsets.all(8),
-                  child: Icon(Icons.search, size: 18),
+                  // padding: EdgeInsets.all(8),
+                  child: Icon(Icons.search, size: 19),
                 ),
                 SizedBox(width: 10),
 
@@ -68,9 +79,10 @@ class _CallhisttoryScreenState extends State<CallhisttoryScreen> {
               ],
             ),
           ),
-
+          SizedBox(height: 12),
           // 🔥 TABS
           Container(
+            height: 52,
             color: Colors.white,
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Row(
@@ -89,10 +101,13 @@ class _CallhisttoryScreenState extends State<CallhisttoryScreen> {
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 12),
               children: isMissedSelected
-                  ? missedCalls()
-                  : allCalls(),
+                  ? allCallData
+                        .where((e) => e["duration"] == "Missed")
+                        .map(callTile)
+                        .toList()
+                  : allCallData.map(callTile).toList(),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -112,7 +127,7 @@ class _CallhisttoryScreenState extends State<CallhisttoryScreen> {
           Text(
             title,
             style: GoogleFonts.inter(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
               color: selected ? Colors.black : Colors.grey,
             ),
@@ -121,101 +136,322 @@ class _CallhisttoryScreenState extends State<CallhisttoryScreen> {
           Container(
             height: 2,
             width: 70,
-            color: selected ? Colors.indigo : Colors.transparent,
-          )
+            color: selected ? Color(0xff07038D) : Colors.transparent,
+          ),
         ],
       ),
     );
   }
 
   // 🔹 ALL CALLS LIST
-  List<Widget> allCalls() {
-    return [
-      callTile("Sarah Johnson", "Today, 2:45 PM", false, true),
-      callTile("Michael Chen", "Today, 11:20 AM", true, false),
-      callTile("Emma Williams", "Yesterday, 6:15 PM", false, true),
-      callTile("David Martinez", "Yesterday, 3:30 PM", false, true),
-      callTile("Lisa Anderson", "Dec 28, 10:45 AM", false, true),
-      callTile("James Wilson", "Dec 27, 8:00 PM", true, false),
-    ];
-  }
-
-  // 🔹 MISSED CALLS LIST
-  List<Widget> missedCalls() {
-    return [
-      callTile("Michael Chen", "Today, 11:20 AM", true, false),
-      callTile("Michael Chen", "Today, 11:20 AM", true, false),
-      callTile("James Wilson", "Dec 27, 8:00 PM", true, false),
-      callTile("James Wilson", "Dec 27, 8:00 PM", true, false),
-    ];
-  }
+  final List<Map<String, dynamic>> allCallData = [
+    {
+      "name": "Sarah Johnson",
+      "time": "Today, 2:45 PM",
+      "type": "audio",
+      "duration": "12 mins",
+      "image": "https://i.pravatar.cc/150?img=1",
+      "amount": "-450",
+      "status": "incoming",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+    {
+      "name": "Sarah Johnson",
+      "time": "Today, 2:45 PM",
+      "type": "audio",
+      "duration": "12 mins",
+      "image": "https://i.pravatar.cc/150?img=1",
+      "amount": "-450",
+      "status": "incoming",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+    {
+      "name": "Sarah Johnson",
+      "time": "Today, 2:45 PM",
+      "type": "audio",
+      "duration": "12 mins",
+      "image": "https://i.pravatar.cc/150?img=1",
+      "amount": "-450",
+      "status": "incoming",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+    {
+      "name": "Sarah Johnson",
+      "time": "Today, 2:45 PM",
+      "type": "audio",
+      "duration": "12 mins",
+      "image": "https://i.pravatar.cc/150?img=1",
+      "amount": "-450",
+      "status": "incoming",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+    {
+      "name": "Sarah Johnson",
+      "time": "Today, 2:45 PM",
+      "type": "audio",
+      "duration": "12 mins",
+      "image": "https://i.pravatar.cc/150?img=1",
+      "amount": "-450",
+      "status": "incoming",
+    },
+    {
+      "name": "Michael Chen",
+      "time": "Today, 11:20 AM",
+      "type": "audio",
+      "duration": "Missed",
+      "image": "https://i.pravatar.cc/150?img=2",
+      "amount": "",
+      "status": "missed",
+    },
+  ];
 
   // 🔹 CALL TILE
-  Widget callTile(
-      String name, String time, bool isMissed, bool isOutgoing) {
+  Widget callTile(Map<String, dynamic> item) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
-      padding: EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 14),
+
+      padding: const EdgeInsets.all(12),
+
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(18),
       ),
+
       child: Row(
         children: [
-          CircleAvatar(radius: 22),
+          /// PROFILE IMAGE
+          Stack(
+            children: [
+              CircleAvatar(
+                radius: 24,
+                backgroundImage: NetworkImage(item["image"].toString()),
+              ),
 
-          SizedBox(width: 12),
+              Positioned(
+                bottom: 0,
+                right: 0,
 
+                child: Container(
+                  height: 16,
+                  width: 16,
+
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+
+                    color: item["duration"] == "Missed"
+                        ? Colors.red
+                        : Colors.green,
+
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+
+                  child: Icon(Icons.call, color: Colors.white, size: 8),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(width: 12),
+
+          /// DETAILS
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
-                Text(
-                  name,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        item["name"].toString(),
+
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+
+                          fontSize: 16,
+
+                          color: const Color(0xff111827),
+                        ),
+                      ),
+                    ),
+
+                    item["amount"].toString().isNotEmpty
+                        ? Container(
+                            height: 32,
+
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 6,
+                            ),
+
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+
+                              border: Border.all(color: Colors.grey.shade300),
+
+                              color: Colors.white,
+                            ),
+
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+
+                              children: [
+                                const Icon(
+                                  Icons.monetization_on,
+
+                                  color: Colors.amber,
+                                  size: 18,
+                                ),
+
+                                const SizedBox(width: 4),
+
+                                Text(
+                                  item["amount"].toString(),
+
+                                  style: GoogleFonts.inter(
+                                    color: Colors.red,
+
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(
+                            height: 42,
+                            width: 42,
+
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+
+                              shape: BoxShape.circle,
+
+                              border: Border.all(color: Colors.grey.shade300),
+                            ),
+
+                            child: const Icon(Icons.call, color: Colors.green),
+                          ),
+                  ],
                 ),
-                SizedBox(height: 4),
+
+                const SizedBox(height: 4),
 
                 Row(
                   children: [
                     Icon(
-                      isMissed ? Icons.call_received : Icons.call_made,
+                      item["type"] == "video" ? Icons.videocam : Icons.call,
+
+                      color: const Color(0xffA855F7),
+
                       size: 14,
-                      color: isMissed ? Colors.red : Colors.green,
                     ),
-                    SizedBox(width: 4),
+
+                    const SizedBox(width: 4),
 
                     Text(
-                      time,
+                      item["time"].toString(),
+
                       style: GoogleFonts.inter(
-                        fontSize: 12,
-                        color: Colors.grey,
+                        fontSize: 11,
+                        color: const Color(0xff6B7280),
                       ),
                     ),
 
-                    if (isMissed)
-                      Text(
-                        "  •  Missed",
-                        style: TextStyle(color: Colors.red, fontSize: 12),
+                    const Text("  •  "),
+
+                    Text(
+                      item["duration"].toString(),
+
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+
+                        color: item["duration"] == "Missed"
+                            ? Colors.red
+                            : const Color(0xff6B7280),
                       ),
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
-
-          // 🔥 CALL BUTTON
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: isMissed ? Colors.red : Colors.green,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(Icons.call, color: Colors.white, size: 18),
-          )
         ],
       ),
     );
